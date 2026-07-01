@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Direct Tax Laws & International Taxation — Lecture Register</title>
+<style>
+  :root{
+    --desk-bg:#131c30;
+    --desk-bg-deep:#0c1220;
+    --paper:#f0e8d6;
+    --paper-deep:#e6dcc2;
+    --paper-line:#d3c6a3;
+    --ink:#241f16;
+    --ink-soft:#6e6350;
+    --on-desk:#ede6d6;
+    --on-desk-muted:#95a2bb;
+    --gold:#c9982f;
+    --gold-deep:#a67a22;
+    --green:#2f6b4f;
+    --green-deep:#20492f;
+    --rust:#9c5b3b;
+    --slate-blue:#4f6c8c;
+    --red:#9c3b3b;
+    --radius-sm:4px;
+    --radius-md:9px;
+    --shadow-doc:0 10px 28px rgba(0,0,0,0.38), 0 2px 6px rgba(0,0,0,0.25);
+    --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+    --font-mono: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(201,152,47,0.07), transparent 55%),
+      radial-gradient(ellipse at 85% 100%, rgba(47,107,79,0.08), transparent 55%),
+      var(--desk-bg);
+    color:var(--on-desk);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:28px 20px 60px;}
+
+  /* ---------- Header ---------- */
+  .file-header{
+    padding:26px 26px 22px;
+    border:1px solid rgba(237,230,214,0.14);
+    border-radius:var(--radius-md);
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+    margin-bottom:22px;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    letter-spacing:2.5px;
+    font-size:11px;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin:0 0 8px;
+  }
+  .file-title{
+    font-family:var(--font-display);
+    font-size:clamp(24px,4vw,34px);
+    font-weight:700;
+    margin:0 0 6px;
+    color:var(--on-desk);
+    letter-spacing:0.2px;
+  }
+  .file-sub{
+    font-size:13.5px;
+    color:var(--on-desk-muted);
+    margin:0 0 18px;
+  }
+  .header-meta{
+    display:flex; flex-wrap:wrap; gap:22px; align-items:center;
+    border-top:1px dashed rgba(237,230,214,0.18);
+    padding-top:16px;
+  }
+  .meta-item{display:flex; flex-direction:column; gap:2px;}
+  .meta-label{font-family:var(--font-mono); font-size:10px; letter-spacing:1.5px; color:var(--on-desk-muted); text-transform:uppercase;}
+  .meta-value{font-family:var(--font-mono); font-size:14px; color:var(--on-desk); font-weight:600;}
+  .meta-value input[type="date"]{
+    background:transparent; border:none; color:var(--gold); font-family:var(--font-mono);
+    font-size:14px; font-weight:600; padding:0; cursor:pointer;
+  }
+  .meta-value input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.8) sepia(1) saturate(3) hue-rotate(10deg); cursor:pointer;}
+
+  /* ---------- Paper card (documents on the desk) ---------- */
+  .doc{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-doc);
+    padding:22px 24px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .doc-title{
+    font-family:var(--font-display);
+    font-size:19px;
+    font-weight:700;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .doc-note{font-size:12.5px; color:var(--ink-soft); margin:0 0 16px;}
+
+  /* ---------- Overview ---------- */
+  .overview-grid{display:grid; grid-template-columns: auto 1fr; gap:26px; align-items:center;}
+  @media (max-width:760px){ .overview-grid{grid-template-columns:1fr;} }
+  .rings-row{display:flex; gap:22px; flex-wrap:wrap; justify-content:center;}
+  .ring-block{text-align:center;}
+  .ring-num{font-family:var(--font-mono); font-weight:700; font-size:20px;}
+  .ring-label{font-family:var(--font-mono); font-size:9.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-soft); margin-top:4px;}
+  .stat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(128px,1fr)); gap:12px;}
+  .stat-card{
+    border:1px solid var(--paper-line);
+    border-left:3px solid var(--gold);
+    border-radius:var(--radius-sm);
+    padding:10px 12px;
+    background:rgba(255,255,255,0.28);
+  }
+  .stat-card.accent-green{border-left-color:var(--green);}
+  .stat-card.accent-rust{border-left-color:var(--rust);}
+  .stat-card.accent-slate{border-left-color:var(--slate-blue);}
+  .stat-num{font-family:var(--font-mono); font-size:18px; font-weight:700; color:var(--ink); line-height:1.2;}
+  .stat-lbl{font-size:10.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.6px; margin-top:2px;}
+
+  /* ---------- Modules ---------- */
+  .modules-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(255px,1fr)); gap:13px;}
+  .module-card{
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius-sm);
+    padding:12px 13px 13px;
+    background:rgba(255,255,255,0.24);
+    border-top:3px solid var(--tag-color, var(--gold));
+  }
+  .module-eyebrow{font-family:var(--font-mono); font-size:10px; color:var(--ink-soft); letter-spacing:1px; text-transform:uppercase;}
+  .module-name{font-weight:700; font-size:14px; margin:3px 0 8px; color:var(--ink); line-height:1.25;}
+  .bar-track{height:7px; border-radius:5px; background:var(--paper-line); overflow:hidden; margin-bottom:7px;}
+  .bar-fill{height:100%; background:var(--tag-color, var(--gold)); border-radius:5px;}
+  .module-foot{display:flex; justify-content:space-between; align-items:center; font-size:11.5px; color:var(--ink-soft); font-family:var(--font-mono);}
+  .module-actions{display:flex; gap:6px; margin-top:9px;}
+  .mini-btn{
+    font-size:10.5px; font-family:var(--font-mono); letter-spacing:0.3px;
+    padding:4px 8px; border-radius:4px; border:1px solid var(--paper-line);
+    background:transparent; color:var(--ink-soft); cursor:pointer;
+  }
+  .mini-btn:hover{border-color:var(--tag-color,var(--gold)); color:var(--ink);}
+
+  /* ---------- Controls ---------- */
+  .controls-bar{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+  .input, .select{
+    font-family:var(--font-body); font-size:13px; color:var(--ink);
+    border:1px solid var(--paper-line); background:rgba(255,255,255,0.5);
+    border-radius:var(--radius-sm); padding:8px 10px;
+  }
+  .input{flex:1 1 220px; min-width:160px;}
+  .btn{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.4px;
+    padding:8px 13px; border-radius:5px; border:1px solid var(--paper-line);
+    background:rgba(255,255,255,0.4); color:var(--ink); cursor:pointer;
+  }
+  .btn:hover{border-color:var(--gold); color:var(--gold-deep);}
+  .btn-danger:hover{border-color:var(--red); color:var(--red);}
+  .controls-spacer{flex:1 1 auto;}
+  .count-note{font-size:11.5px; color:var(--ink-soft); font-family:var(--font-mono); margin-top:8px;}
+
+  /* ---------- Register rows ---------- */
+  .register{margin-top:14px; border-top:1px solid var(--paper-line);}
+  .register-row{border-bottom:1px solid var(--paper-line); padding:12px 2px;}
+  .row-main{
+    display:grid;
+    grid-template-columns: 54px 1fr 96px 210px;
+    gap:14px; align-items:center;
+  }
+  @media (max-width:780px){
+    .row-main{grid-template-columns:1fr; gap:8px;}
+    .row-day{flex-direction:row !important; gap:8px;}
+  }
+  .row-day{display:flex; flex-direction:column; align-items:flex-start; font-family:var(--font-mono); color:var(--ink-soft); font-size:10px; text-transform:uppercase; letter-spacing:1px;}
+  .row-day .day-num{font-size:19px; font-weight:700; color:var(--ink); letter-spacing:0;}
+  .row-title{font-weight:600; font-size:14.5px; color:var(--ink); margin-bottom:5px; line-height:1.3;}
+  .row-tags{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+  .chip{
+    font-family:var(--font-mono); font-size:10.5px; padding:2px 8px; border-radius:20px;
+    border:1px solid var(--tag-color, var(--slate-blue)); color:var(--tag-color, var(--slate-blue));
+    white-space:nowrap;
+  }
+  .chip-duration{border-color:var(--paper-line); color:var(--ink-soft);}
+  .row-priority select{
+    width:100%; font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:0.5px;
+    padding:6px 6px; border-radius:5px; border:1px solid var(--paper-line); background:rgba(255,255,255,0.5); color:var(--ink);
+  }
+  .row-status{display:flex; align-items:center; gap:8px; justify-content:flex-end; flex-wrap:wrap;}
+  @media (max-width:780px){ .row-status{justify-content:flex-start;} }
+  .btn-complete{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.4px; padding:7px 12px;
+    border-radius:5px; border:1px solid var(--gold); background:transparent; color:var(--gold-deep); cursor:pointer; white-space:nowrap;
+  }
+  .btn-complete:hover{background:rgba(201,152,47,0.14);}
+  .stamp{
+    display:inline-block; border:2px solid var(--green); color:var(--green);
+    padding:2px 9px; border-radius:3px; transform:rotate(-6deg);
+    font-family:var(--font-mono); font-weight:700; font-size:10.5px; letter-spacing:1.2px;
+    opacity:0.92; white-space:nowrap;
+  }
+  .completed-date-input{
+    font-family:var(--font-mono); font-size:11px; border:1px solid var(--paper-line);
+    background:rgba(255,255,255,0.5); border-radius:4px; padding:4px 5px; color:var(--ink-soft);
+  }
+  .undo-link{font-family:var(--font-mono); font-size:10.5px; color:var(--rust); background:none; border:none; cursor:pointer; text-decoration:underline; padding:0;}
+
+  .row-notes{margin-top:9px;}
+  .row-notes summary{
+    cursor:pointer; font-family:var(--font-mono); font-size:10.5px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--ink-soft); list-style:none; display:inline-flex; align-items:center; gap:5px;
+  }
+  .row-notes summary::-webkit-details-marker{display:none;}
+  .row-notes summary::before{content:"▸"; font-size:9px;}
+  .row-notes[open] summary::before{content:"▾";}
+  .row-notes textarea{
+    width:100%; margin-top:7px; min-height:52px; resize:vertical; font-family:var(--font-body);
+    font-size:12.5px; border:1px solid var(--paper-line); border-radius:5px; padding:8px; background:rgba(255,255,255,0.55); color:var(--ink);
+  }
+  .row-notes-flag{color:var(--rust);}
+
+  .empty-state{padding:30px 10px; text-align:center; color:var(--ink-soft); font-size:13px;}
+
+  /* ---------- Analysis ---------- */
+  .analysis-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; margin-bottom:20px;}
+  .chart-scroll{overflow-x:auto; padding-bottom:6px;}
+  .chart-scroll svg{display:block;}
+  .module-bar-row{display:grid; grid-template-columns:200px 1fr 150px; gap:10px; align-items:center; padding:6px 0; font-size:12px;}
+  @media (max-width:640px){ .module-bar-row{grid-template-columns:1fr; gap:4px;} }
+  .module-bar-track{height:12px; border-radius:6px; background:var(--paper-line); overflow:hidden;}
+  .module-bar-fill{height:100%; border-radius:6px;}
+  .module-bar-label{font-weight:600; color:var(--ink); font-size:12px;}
+  .module-bar-stats{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); text-align:right;}
+  @media (max-width:640px){ .module-bar-stats{text-align:left;} }
+
+  .desk-footer{
+    text-align:center; color:var(--on-desk-muted); font-size:11.5px; font-family:var(--font-mono);
+    padding-top:8px; letter-spacing:0.3px;
+  }
+  .desk-footer .save-dot{color:var(--green); }
+
+  .section-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--on-desk-muted); margin:30px 2px 10px;
+  }
+  .section-label:first-of-type{margin-top:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="file-header">
+    <p class="eyebrow">CA Final · Group 2 · Paper 4</p>
+    <h1 class="file-title">Direct Tax Laws &amp; International Taxation</h1>
+    <p class="file-sub">Lecture Register — Fast Track Batch · 45 Sessions</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Batch Commenced</span>
+        <span class="meta-value"><input type="date" id="startDateInput"></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Planned Finish</span>
+        <span class="meta-value" id="plannedFinishVal">—</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Total Runtime</span>
+        <span class="meta-value" id="totalRuntimeVal">—</span>
+      </div>
+    </div>
+  </header>
+
+  <p class="section-label">Overview</p>
+  <section class="doc" id="overviewPanel">
+    <div class="overview-grid">
+      <div class="rings-row" id="ringsRow"></div>
+      <div class="stat-grid" id="statGrid"></div>
+    </div>
+  </section>
+
+  <p class="section-label">Module Register</p>
+  <section class="doc">
+    <p class="doc-note">Lectures grouped by topic block, in schedule order. Use the stamp buttons to file an entire block at once.</p>
+    <div class="modules-grid" id="modulesGrid"></div>
+  </section>
+
+  <p class="section-label">Lecture-wise Tracking</p>
+  <section class="doc">
+    <div class="controls-bar">
+      <input class="input" id="searchInput" type="text" placeholder="Search by day or topic…">
+      <select class="select" id="statusFilter">
+        <option value="all">All statuses</option>
+        <option value="pending">Pending only</option>
+        <option value="completed">Completed only</option>
+      </select>
+      <select class="select" id="moduleFilter"><option value="all">All modules</option></select>
+      <select class="select" id="priorityFilter">
+        <option value="all">All priorities</option>
+        <option value="HIGH">High priority</option>
+        <option value="MED">Medium priority</option>
+        <option value="LOW">Low priority</option>
+      </select>
+      <div class="controls-spacer"></div>
+      <button class="btn" id="exportBtn">Export backup</button>
+      <button class="btn" id="importBtn">Import backup</button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+      <button class="btn btn-danger" id="resetBtn">Reset progress</button>
+    </div>
+    <p class="count-note" id="countNote"></p>
+    <div class="register" id="registerList"></div>
+  </section>
+
+  <p class="section-label">Study Time Analysis</p>
+  <section class="doc">
+    <div class="analysis-grid" id="analysisMetrics"></div>
+    <div class="doc-title" style="font-size:15px;">Daily Study Minutes</div>
+    <p class="doc-note">Minutes logged against each calendar day since the batch began, based on the completed dates below.</p>
+    <div class="chart-scroll" id="dailyChart"></div>
+  </section>
+
+  <section class="doc">
+    <div class="doc-title" style="font-size:15px;">Completion by Module</div>
+    <p class="doc-note">Share of each topic block completed so far, by lecture count and runtime.</p>
+    <div id="moduleBars"></div>
+  </section>
+
+  <footer class="desk-footer">
+    <span class="save-dot">●</span> Saved locally in this browser — <span id="lastSaved">—</span>. Export a backup now and then so a browser reset can't wipe your progress.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ================= DATA ================= */
+  var MODULE_DEFS = [
+    {name:'Basics & Tax Rates', upto:2},
+    {name:'Capital Gains & Dividend', upto:10},
+    {name:'PGBP', upto:17},
+    {name:'Firm, SEZ, Alternate Regime & Business Trust', upto:20},
+    {name:'Investment Fund, Set-off & MAT', upto:22},
+    {name:'AOP/BOI, Clubbing & Deductions', upto:24},
+    {name:'TDS & TCS', upto:27},
+    {name:'DTAA & Transfer Pricing', upto:30},
+    {name:'NR Taxation, Exempt Income & GAAR', upto:33},
+    {name:'Assessment Procedure', upto:38},
+    {name:'Taxation of Trust & Black Money', upto:40},
+    {name:'Appeals, Tax Audit & Penalties', upto:43},
+    {name:'BEPS, Treaties & Compounding', upto:45}
+  ];
+  var ACCENTS = ['var(--gold)','var(--green)','var(--slate-blue)','var(--rust)'];
+
+  var RAW = [
+    [1,'Basic',239],[2,'Basic Tax Rates',198],
+    [3,'Capital Gain',228],[4,'Capital Gain',231],[5,'Capital Gain',284],[6,'Capital Gain',293],
+    [7,'Capital Gain',147],[8,'Capital Gain',280],[9,'Capital Gain, Dividend & Deemed Dividend',251],
+    [10,'Dividend Buy-back, Interest Stripping & Amalgamation',190],
+    [11,'PGBP',255],[12,'PGBP',244],[13,'PGBP',236],[14,'PGBP',260],[15,'PGBP',271],[16,'PGBP',273],[17,'PGBP',239],
+    [18,'Political Party, Taxation of Firm & SEZ',296],
+    [19,'SEZ & Alternative Tax Regime',220],
+    [20,'Alternative Tax Regime & Business Trust',239],
+    [21,'Investment Fund, Set-off & Carry Forward',273],
+    [22,'MAT',216],
+    [23,'AOP/BOI, Clubbing & Deduction under Chapter VI-A',269],
+    [24,'Deduction under Chapter VI-A',173],
+    [25,'TDS & TCS',369],[26,'TDS & TCS',251],[27,'TDS & TCS',273],
+    [28,'DTAA',248],[29,'DTAA & Transfer Pricing',266],[30,'Transfer Pricing',283],
+    [31,'Transfer Pricing, Exempt Income & NR Taxation',259],
+    [32,'NR Taxation, GAAR & Advance Ruling',290],
+    [33,'NR Taxation',218],
+    [34,'Assessment Procedure',255],[35,'Assessment Procedure',260],
+    [36,'Assessment Procedure & Advance Tax',294],
+    [37,'Assessment Procedure',316],
+    [38,'Assessment Procedure & Taxation of Trust',283],
+    [39,'Taxation of Trust',169],
+    [40,'Taxation of Trust, Black Money & NR Taxation',321],
+    [41,'Appeals & Revision',284],
+    [42,'Tax Audit & Miscellaneous',281],
+    [43,'Penalties, Prosecutions & Miscellaneous',301],
+    [44,'BEPS & Tax Treaties',269],
+    [45,'MTC & Compounding of Offence',151]
+  ];
+
+  function moduleIndexForDay(day){
+    for(var i=0;i<MODULE_DEFS.length;i++){ if(day<=MODULE_DEFS[i].upto) return i; }
+    return MODULE_DEFS.length-1;
+  }
+
+  var LECTURES = RAW.map(function(r){
+    var mi = moduleIndexForDay(r[0]);
+    return {id:r[0], day:r[0], title:r[1], duration:r[2], moduleIndex:mi, moduleName:MODULE_DEFS[mi].name};
+  });
+
+  /* ================= STORAGE ================= */
+  var STORAGE_KEY = 'ca_dt_ft_lecture_register_v1';
+
+  function defaultState(){
+    var records = {};
+    LECTURES.forEach(function(l){
+      records[l.id] = {completed:false, completedDate:null, priority:'MED', notes:''};
+    });
+    return {startDate:'2026-07-01', records:records};
+  }
+
+  function loadState(){
+    var raw = null;
+    try{ raw = localStorage.getItem(STORAGE_KEY); }catch(e){}
+    if(!raw) return defaultState();
+    try{
+      var parsed = JSON.parse(raw);
+      if(!parsed.records) return defaultState();
+      LECTURES.forEach(function(l){
+        if(!parsed.records[l.id]){
+          parsed.records[l.id] = {completed:false, completedDate:null, priority:'MED', notes:''};
+        }
+      });
+      if(!parsed.startDate) parsed.startDate = '2026-07-01';
+      return parsed;
+    }catch(e){ return defaultState(); }
+  }
+
+  function saveState(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      var el = document.getElementById('lastSaved');
+      if(el) el.textContent = fmtTime(new Date());
+    }catch(e){ console.error('Could not save to localStorage', e); }
+  }
+
+  var state = loadState();
+  var filters = {search:'', status:'all', module:'all', priority:'all'};
+
+  /* ================= DATE HELPERS ================= */
+  function parseDateStr(str){
+    var parts = str.split('-').map(Number);
+    return new Date(parts[0], parts[1]-1, parts[2]);
+  }
+  function toISO(d){
+    var y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
+    return y+'-'+m+'-'+day;
+  }
+  function startOfDay(d){ var nd=new Date(d.getTime()); nd.setHours(0,0,0,0); return nd; }
+  function addDaysISO(str,n){ var d=parseDateStr(str); d.setDate(d.getDate()+n); return toISO(d); }
+  function daysBetween(aISO, bDate){
+    var a = startOfDay(parseDateStr(aISO)).getTime();
+    var b = startOfDay(bDate).getTime();
+    return Math.round((b-a)/86400000);
+  }
+  function fmtDateISO(iso){
+    if(!iso) return '—';
+    var d = parseDateStr(iso);
+    return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  }
+  function fmtDateShort(iso){
+    var d = parseDateStr(iso);
+    return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'});
+  }
+  function fmtTime(d){
+    return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+  }
+  function fmtMinutes(mins){
+    var h = Math.floor(mins/60), m = mins%60;
+    if(h<=0) return m+'m';
+    return h+'h '+m+'m';
+  }
+  function todayDate(){ return startOfDay(new Date()); }
+
+  /* ================= STATS ================= */
+  function computeStats(){
+    var totalLectures = LECTURES.length;
+    var totalMinutes = LECTURES.reduce(function(s,l){return s+l.duration;},0);
+    var completedCount=0, completedMinutes=0;
+    var studyByDate = {}; // iso -> minutes
+
+    LECTURES.forEach(function(l){
+      var rec = state.records[l.id];
+      if(rec && rec.completed){
+        completedCount++;
+        completedMinutes += l.duration;
+        if(rec.completedDate){
+          studyByDate[rec.completedDate] = (studyByDate[rec.completedDate]||0) + l.duration;
+        }
+      }
+    });
+
+    var remainingCount = totalLectures - completedCount;
+    var remainingMinutes = totalMinutes - completedMinutes;
+    var pctLectures = totalLectures ? Math.round((completedCount/totalLectures)*100) : 0;
+    var pctMinutes = totalMinutes ? Math.round((completedMinutes/totalMinutes)*100) : 0;
+
+    var today = todayDate();
+    var daysElapsed = Math.max(0, daysBetween(state.startDate, today) + 1);
+    var expectedByToday = Math.max(0, Math.min(totalLectures, daysElapsed));
+    var scheduleDelta = completedCount - expectedByToday;
+
+    var plannedFinishISO = addDaysISO(state.startDate, totalLectures-1);
+
+    // streaks
+    var studyDatesSorted = Object.keys(studyByDate).sort();
+    var studySet = {}; studyDatesSorted.forEach(function(d){studySet[d]=true;});
+    var currentStreak = 0;
+    var cursor = new Date(today.getTime());
+    var cursorISO = toISO(cursor);
+    if(!studySet[cursorISO]){
+      cursor.setDate(cursor.getDate()-1);
+      cursorISO = toISO(cursor);
+    }
+    while(studySet[cursorISO]){
+      currentStreak++;
+      cursor.setDate(cursor.getDate()-1);
+      cursorISO = toISO(cursor);
+    }
+    var longestStreak = 0, run = 0, prevDate=null;
+    studyDatesSorted.forEach(function(iso){
+      var d = parseDateStr(iso);
+      if(prevDate){
+        var diff = Math.round((startOfDay(d).getTime()-startOfDay(prevDate).getTime())/86400000);
+        run = (diff===1) ? run+1 : 1;
+      } else { run = 1; }
+      longestStreak = Math.max(longestStreak, run);
+      prevDate = d;
+    });
+
+    var avgLecPerDay = daysElapsed>0 ? completedCount/daysElapsed : 0;
+    var avgMinPerDay = daysElapsed>0 ? completedMinutes/daysElapsed : 0;
+    var projectedFinishISO = null;
+    if(avgLecPerDay>0 && remainingCount>0){
+      var daysNeeded = Math.ceil(remainingCount/avgLecPerDay);
+      projectedFinishISO = toISO((function(){var d=new Date(today.getTime()); d.setDate(d.getDate()+daysNeeded); return d;})());
+    } else if(remainingCount===0){
+      // finished — last completed date is the finish date
+      var lastDate = studyDatesSorted.length ? studyDatesSorted[studyDatesSorted.length-1] : null;
+      projectedFinishISO = lastDate;
+    }
+
+    // module-wise
+    var moduleStats = MODULE_DEFS.map(function(m, idx){
+      var lecs = LECTURES.filter(function(l){return l.moduleIndex===idx;});
+      var tot = lecs.reduce(function(s,l){return s+l.duration;},0);
+      var comp = 0, compMin=0;
+      lecs.forEach(function(l){
+        var rec = state.records[l.id];
+        if(rec && rec.completed){ comp++; compMin+=l.duration; }
+      });
+      return {
+        name:m.name, index:idx, from:lecs.length?lecs[0].day:0, to:lecs.length?lecs[lecs.length-1].day:0,
+        count:lecs.length, completed:comp, totalMinutes:tot, completedMinutes:compMin,
+        pct: lecs.length ? Math.round((comp/lecs.length)*100) : 0,
+        accent: ACCENTS[idx % ACCENTS.length]
+      };
+    });
+
+    // daily chart range: from startDate to max(today, last study date)
+    var rangeEndDate = today;
+    if(studyDatesSorted.length){
+      var lastStudy = parseDateStr(studyDatesSorted[studyDatesSorted.length-1]);
+      if(lastStudy > rangeEndDate) rangeEndDate = lastStudy;
+    }
+    var rangeDays = Math.max(1, daysBetween(state.startDate, rangeEndDate)+1);
+    var dailySeries = [];
+    for(var i=0;i<rangeDays;i++){
+      var iso = addDaysISO(state.startDate, i);
+      dailySeries.push({date:iso, minutes: studyByDate[iso]||0});
+    }
+
+    return {
+      totalLectures:totalLectures, totalMinutes:totalMinutes,
+      completedCount:completedCount, completedMinutes:completedMinutes,
+      remainingCount:remainingCount, remainingMinutes:remainingMinutes,
+      pctLectures:pctLectures, pctMinutes:pctMinutes,
+      daysElapsed:daysElapsed, expectedByToday:expectedByToday, scheduleDelta:scheduleDelta,
+      plannedFinishISO:plannedFinishISO, projectedFinishISO:projectedFinishISO,
+      currentStreak:currentStreak, longestStreak:longestStreak,
+      avgLecPerDay:avgLecPerDay, avgMinPerDay:avgMinPerDay,
+      moduleStats:moduleStats, dailySeries:dailySeries
+    };
+  }
+
+  /* ================= RENDER: HEADER / OVERVIEW ================= */
+  function ringSVG(pct, colorVar, size, num, label){
+    var r = (size-10)/2, c = 2*Math.PI*r, off = c*(1-pct/100);
+    return '' +
+    '<div class="ring-block">' +
+      '<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">' +
+        '<circle cx="'+(size/2)+'" cy="'+(size/2)+'" r="'+r+'" fill="none" stroke="var(--paper-line)" stroke-width="8"></circle>' +
+        '<circle cx="'+(size/2)+'" cy="'+(size/2)+'" r="'+r+'" fill="none" stroke="'+colorVar+'" stroke-width="8" ' +
+          'stroke-linecap="round" stroke-dasharray="'+c+'" stroke-dashoffset="'+off+'" ' +
+          'transform="rotate(-90 '+(size/2)+' '+(size/2)+')"></circle>' +
+        '<text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="var(--font-mono)" font-weight="700" font-size="16" fill="var(--ink)">'+pct+'%</text>' +
+      '</svg>' +
+      '<div class="ring-label">'+label+'</div>' +
+    '</div>';
+  }
+
+  function renderHeaderMeta(stats){
+    document.getElementById('startDateInput').value = state.startDate;
+    document.getElementById('plannedFinishVal').textContent = fmtDateISO(stats.plannedFinishISO);
+    document.getElementById('totalRuntimeVal').textContent = fmtMinutes(stats.totalMinutes);
+  }
+
+  function renderOverview(stats){
+    document.getElementById('ringsRow').innerHTML =
+      ringSVG(stats.pctLectures, 'var(--gold)', 110, stats.pctLectures, 'Lectures completed') +
+      ringSVG(stats.pctMinutes, 'var(--green)', 110, stats.pctMinutes, 'Runtime covered');
+
+    var deltaLabel, deltaAccent;
+    if(stats.scheduleDelta > 0){ deltaLabel = stats.scheduleDelta+' ahead'; deltaAccent='accent-green'; }
+    else if(stats.scheduleDelta < 0){ deltaLabel = Math.abs(stats.scheduleDelta)+' behind'; deltaAccent='accent-rust'; }
+    else { deltaLabel = 'On schedule'; deltaAccent='accent-slate'; }
+
+    var cards = [
+      {num: stats.completedCount+' / '+stats.totalLectures, lbl:'Lectures completed', accent:''},
+      {num: fmtMinutes(stats.completedMinutes), lbl:'Runtime covered', accent:'accent-green'},
+      {num: fmtMinutes(stats.remainingMinutes), lbl:'Runtime remaining', accent:'accent-rust'},
+      {num: stats.daysElapsed, lbl:'Days since start', accent:'accent-slate'},
+      {num: deltaLabel, lbl:'vs. one-a-day schedule', accent:deltaAccent},
+      {num: stats.currentStreak+'d', lbl:'Current streak', accent:'accent-green'}
+    ];
+    document.getElementById('statGrid').innerHTML = cards.map(function(c){
+      return '<div class="stat-card '+c.accent+'"><div class="stat-num">'+c.num+'</div><div class="stat-lbl">'+c.lbl+'</div></div>';
+    }).join('');
+  }
+
+  /* ================= RENDER: MODULES ================= */
+  function renderModules(stats){
+    document.getElementById('modulesGrid').innerHTML = stats.moduleStats.map(function(m){
+      return '' +
+      '<div class="module-card" style="--tag-color:'+m.accent+'">' +
+        '<div class="module-eyebrow">Days '+String(m.from).padStart(2,'0')+'–'+String(m.to).padStart(2,'0')+'</div>' +
+        '<div class="module-name">'+m.name+'</div>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:'+m.pct+'%"></div></div>' +
+        '<div class="module-foot"><span>'+m.completed+' / '+m.count+' completed</span><span>'+fmtMinutes(m.totalMinutes)+'</span></div>' +
+        '<div class="module-actions">' +
+          '<button class="mini-btn" data-module-action="complete" data-module-index="'+m.index+'">Mark block completed</button>' +
+          '<button class="mini-btn" data-module-action="reset" data-module-index="'+m.index+'">Mark block pending</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    var moduleFilterEl = document.getElementById('moduleFilter');
+    if(moduleFilterEl.options.length <= 1){
+      MODULE_DEFS.forEach(function(m, idx){
+        var opt = document.createElement('option');
+        opt.value = String(idx); opt.textContent = m.name;
+        moduleFilterEl.appendChild(opt);
+      });
+    }
+  }
+
+  /* ================= RENDER: LIST ================= */
+  function passesFilters(l){
+    var rec = state.records[l.id];
+    if(filters.status==='pending' && rec.completed) return false;
+    if(filters.status==='completed' && !rec.completed) return false;
+    if(filters.module!=='all' && String(l.moduleIndex)!==filters.module) return false;
+    if(filters.priority!=='all' && rec.priority!==filters.priority) return false;
+    if(filters.search){
+      var s = filters.search.toLowerCase();
+      var hay = (String(l.day)+' '+l.title+' '+l.moduleName).toLowerCase();
+      if(hay.indexOf(s)===-1) return false;
+    }
+    return true;
+  }
+
+  function rowHTML(l){
+    var rec = state.records[l.id];
+    var accent = ACCENTS[l.moduleIndex % ACCENTS.length];
+    var statusHTML;
+    if(rec.completed){
+      statusHTML = '' +
+        '<span class="stamp">Completed ✓</span>' +
+        '<input type="date" class="completed-date-input" data-field="date" data-id="'+l.id+'" value="'+(rec.completedDate||'')+'">' +
+        '<button class="undo-link" data-action="toggle" data-id="'+l.id+'">undo</button>';
+    } else {
+      statusHTML = '<button class="btn-complete" data-action="toggle" data-id="'+l.id+'">Mark completed</button>';
+    }
+    var notesFlag = rec.notes ? ' <span class="row-notes-flag">●</span>' : '';
+    return '' +
+    '<div class="register-row" data-id="'+l.id+'">' +
+      '<div class="row-main">' +
+        '<div class="row-day"><span>Day</span><span class="day-num">'+String(l.day).padStart(2,'0')+'</span></div>' +
+        '<div class="row-info">' +
+          '<div class="row-title">'+l.title+'</div>' +
+          '<div class="row-tags">' +
+            '<span class="chip" style="--tag-color:'+accent+'">'+l.moduleName+'</span>' +
+            '<span class="chip chip-duration">'+fmtMinutes(l.duration)+'</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="row-priority">' +
+          '<select data-field="priority" data-id="'+l.id+'">' +
+            '<option value="HIGH"'+(rec.priority==='HIGH'?' selected':'')+'>HIGH</option>' +
+            '<option value="MED"'+(rec.priority==='MED'?' selected':'')+'>MED</option>' +
+            '<option value="LOW"'+(rec.priority==='LOW'?' selected':'')+'>LOW</option>' +
+          '</select>' +
+        '</div>' +
+        '<div class="row-status">'+statusHTML+'</div>' +
+      '</div>' +
+      '<details class="row-notes"' + (rec.notes ? ' open' : '') + '>' +
+        '<summary>Notes'+notesFlag+'</summary>' +
+        '<textarea data-field="notes" data-id="'+l.id+'" placeholder="Add notes for this lecture…">'+(rec.notes||'')+'</textarea>' +
+      '</details>' +
+    '</div>';
+  }
+
+  function renderList(){
+    var visible = LECTURES.filter(passesFilters);
+    var container = document.getElementById('registerList');
+    if(!visible.length){
+      container.innerHTML = '<div class="empty-state">No lectures match these filters.</div>';
+    } else {
+      container.innerHTML = visible.map(rowHTML).join('');
+    }
+    document.getElementById('countNote').textContent = 'Showing '+visible.length+' of '+LECTURES.length+' lectures';
+  }
+
+  /* ================= RENDER: ANALYSIS ================= */
+  function renderAnalysis(stats){
+    var metrics = [
+      {num: stats.currentStreak+' day'+(stats.currentStreak===1?'':'s'), lbl:'Current streak'},
+      {num: stats.longestStreak+' day'+(stats.longestStreak===1?'':'s'), lbl:'Longest streak'},
+      {num: stats.avgLecPerDay.toFixed(1)+'/day', lbl:'Avg. pace (lectures)'},
+      {num: fmtMinutes(Math.round(stats.avgMinPerDay)), lbl:'Avg. pace (per day)'},
+      {num: stats.projectedFinishISO ? fmtDateISO(stats.projectedFinishISO) : '—', lbl:'Projected finish'},
+      {num: fmtDateISO(stats.plannedFinishISO), lbl:'Planned finish (1/day)'}
+    ];
+    document.getElementById('analysisMetrics').innerHTML = metrics.map(function(m){
+      return '<div class="stat-card"><div class="stat-num">'+m.num+'</div><div class="stat-lbl">'+m.lbl+'</div></div>';
+    }).join('');
+
+    renderDailyChart(stats);
+    renderModuleBars(stats);
+  }
+
+  function renderDailyChart(stats){
+    var series = stats.dailySeries;
+    var maxMin = Math.max(60, series.reduce(function(m,d){return Math.max(m,d.minutes);},0));
+    var barW = 22, gap = 6, chartH = 130, axisH = 30;
+    var w = series.length*(barW+gap)+gap;
+    var h = chartH+axisH;
+    var bars = series.map(function(d, i){
+      var x = gap + i*(barW+gap);
+      var bh = Math.round((d.minutes/maxMin)*chartH);
+      var y = chartH-bh;
+      var color = d.minutes>0 ? 'var(--green)' : 'var(--paper-line)';
+      var todayISO = toISO(todayDate());
+      var isToday = d.date===todayISO;
+      var label = fmtDateShort(d.date);
+      return '' +
+        '<g>' +
+          (isToday? '<rect x="'+(x-2)+'" y="0" width="'+(barW+4)+'" height="'+chartH+'" fill="rgba(201,152,47,0.12)"></rect>' : '') +
+          '<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+Math.max(bh,2)+'" rx="2" fill="'+color+'"></rect>' +
+          '<text x="'+(x+barW/2)+'" y="'+(chartH+20)+'" text-anchor="end" transform="rotate(-55 '+(x+barW/2)+' '+(chartH+20)+')" font-family="var(--font-mono)" font-size="9" fill="var(--ink-soft)">'+label+'</text>' +
+        '</g>';
+    }).join('');
+    // gridlines
+    var grid = '';
+    for(var g=0; g<=2; g++){
+      var gy = chartH - (chartH*g/2);
+      grid += '<line x1="0" y1="'+gy+'" x2="'+w+'" y2="'+gy+'" stroke="var(--paper-line)" stroke-width="1" stroke-dasharray="2,3"></line>';
+    }
+    var svg = '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'+grid+bars+'</svg>';
+    document.getElementById('dailyChart').innerHTML = svg;
+    var scrollEl = document.getElementById('dailyChart');
+    scrollEl.scrollLeft = scrollEl.scrollWidth;
+  }
+
+  function renderModuleBars(stats){
+    document.getElementById('moduleBars').innerHTML = stats.moduleStats.map(function(m){
+      return '' +
+      '<div class="module-bar-row">' +
+        '<div class="module-bar-label">'+m.name+'</div>' +
+        '<div class="module-bar-track"><div class="module-bar-fill" style="width:'+m.pct+'%; background:'+m.accent+'"></div></div>' +
+        '<div class="module-bar-stats">'+m.completed+'/'+m.count+' · '+fmtMinutes(m.completedMinutes)+' / '+fmtMinutes(m.totalMinutes)+'</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ================= FULL RENDER ================= */
+  function renderAll(){
+    var stats = computeStats();
+    renderHeaderMeta(stats);
+    renderOverview(stats);
+    renderModules(stats);
+    renderList();
+    renderAnalysis(stats);
+  }
+
+  /* ================= EVENTS ================= */
+  document.getElementById('startDateInput').addEventListener('change', function(e){
+    if(e.target.value){ state.startDate = e.target.value; saveState(); renderAll(); }
+  });
+
+  document.getElementById('searchInput').addEventListener('input', function(e){
+    filters.search = e.target.value; renderList();
+  });
+  document.getElementById('statusFilter').addEventListener('change', function(e){
+    filters.status = e.target.value; renderList();
+  });
+  document.getElementById('moduleFilter').addEventListener('change', function(e){
+    filters.module = e.target.value; renderList();
+  });
+  document.getElementById('priorityFilter').addEventListener('change', function(e){
+    filters.priority = e.target.value; renderList();
+  });
+
+  document.getElementById('modulesGrid').addEventListener('click', function(e){
+    var btn = e.target.closest('[data-module-action]');
+    if(!btn) return;
+    var idx = Number(btn.getAttribute('data-module-index'));
+    var action = btn.getAttribute('data-module-action');
+    var todayISO = toISO(todayDate());
+    LECTURES.filter(function(l){return l.moduleIndex===idx;}).forEach(function(l){
+      if(action==='complete'){
+        state.records[l.id].completed = true;
+        if(!state.records[l.id].completedDate) state.records[l.id].completedDate = todayISO;
+      } else {
+        state.records[l.id].completed = false;
+        state.records[l.id].completedDate = null;
+      }
+    });
+    saveState(); renderAll();
+  });
+
+  document.getElementById('registerList').addEventListener('click', function(e){
+    var t = e.target.closest('[data-action="toggle"]');
+    if(!t) return;
+    var id = Number(t.getAttribute('data-id'));
+    var rec = state.records[id];
+    rec.completed = !rec.completed;
+    if(rec.completed && !rec.completedDate){ rec.completedDate = toISO(todayDate()); }
+    if(!rec.completed){ rec.completedDate = null; }
+    saveState(); renderAll();
+  });
+
+  document.getElementById('registerList').addEventListener('change', function(e){
+    var target = e.target;
+    var field = target.getAttribute('data-field');
+    if(!field) return;
+    var id = Number(target.getAttribute('data-id'));
+    var rec = state.records[id];
+    if(field==='priority'){
+      rec.priority = target.value; saveState(); renderList();
+    } else if(field==='date'){
+      rec.completedDate = target.value || null; saveState(); renderAnalysis(computeStats());
+      renderOverview(computeStats());
+    }
+  });
+
+  document.getElementById('registerList').addEventListener('input', function(e){
+    var target = e.target;
+    var field = target.getAttribute('data-field');
+    if(field==='notes'){
+      var id = Number(target.getAttribute('data-id'));
+      state.records[id].notes = target.value;
+      saveState();
+    }
+  });
+
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    var blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var stamp = toISO(todayDate());
+    a.href = url; a.download = 'dt-lecture-tracker-backup-'+stamp+'.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('importBtn').addEventListener('click', function(){
+    document.getElementById('importFile').click();
+  });
+  document.getElementById('importFile').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try{
+        var parsed = JSON.parse(ev.target.result);
+        if(!parsed.records) throw new Error('Invalid file');
+        LECTURES.forEach(function(l){
+          if(!parsed.records[l.id]) parsed.records[l.id] = {completed:false, completedDate:null, priority:'MED', notes:''};
+        });
+        if(!parsed.startDate) parsed.startDate = state.startDate;
+        state = parsed;
+        saveState(); renderAll();
+        alert('Backup restored successfully.');
+      }catch(err){
+        alert('Could not read this file. Make sure it is a backup exported from this dashboard.');
+      }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(confirm('This will erase all completed lectures, notes and priorities on this device. This cannot be undone. Continue?')){
+      state = defaultState();
+      saveState(); renderAll();
+    }
+  });
+
+  /* ================= INIT ================= */
+  renderAll();
+})();
+</script>
+</body>
+</html>
